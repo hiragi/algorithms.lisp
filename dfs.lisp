@@ -1,0 +1,17 @@
+;; 経路の検索(バックトラック: 深さ優先探索)
+(setf (get 'A 'adjacent) '(B C)
+	  (get 'B 'adjacent) '(A C D)
+	  (get 'C 'adjacent) '(A B E)
+	  (get 'D 'adjacent) '(B E F)
+	  (get 'E 'adjacent) '(C D G)
+	  (get 'F 'adjacent) '(D)
+	  (get 'G 'adjacent) '(E))
+
+(defun search (goal path)
+  (dolist (node (get (car path) 'adjacent))
+	(if (eq goal node)
+		(print (reverse (cons node path)))
+	  (unless (member node path)
+		(search goal (cons node path))))))
+
+(search 'G '(A))

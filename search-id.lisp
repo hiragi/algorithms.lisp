@@ -1,0 +1,21 @@
+;; 反復深化(DFS + 制限)
+
+(setf (get 'A 'adjacent) '(B C)
+	  (get 'B 'adjacent) '(A C D)
+	  (get 'C 'adjacent) '(A B E)
+	  (get 'D 'adjacent) '(B E F)
+	  (get 'E 'adjacent) '(C D G)
+	  (get 'F 'adjacent) '(D)
+	  (get 'G 'adjacent) '(E))
+
+(defun search-id (limit goal path)
+  (if (= limit (length path))
+	  (if (eq goal (car path))
+		  (print (reverse path)))
+	(dolist (node (get (car path) 'adjacent))
+	  (unless (member node path)
+		(search-id limit goal (cons node path))))))
+
+(dotimes (x 7)
+  (format t "~%~D手の探索" (1+ x))
+  (search-id (1+ x) 'G '(A)))
