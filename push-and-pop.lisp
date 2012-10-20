@@ -16,3 +16,13 @@
 (my-pop a)
 
 (macroexpand-1 '(my-pop a))
+
+;; version 2
+
+(defmacro my-push (item place)
+  `(setq ,place (cons ,item ,place)))
+
+(defmacro my-pop (place)
+  `(prog1
+	   (car ,place)
+	 (setq ,place (cdr ,place))))
